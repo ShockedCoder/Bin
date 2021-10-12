@@ -1,0 +1,46 @@
+Phoenix Miner 5.5c Linux/gcc - Release build
+--------------------------------------------
+
+[0mCUDA version: 11.0, CUDA runtime: 8.0
+No OpenCL platforms found
+[97mAvailable GPUs for mining:
+[92mGPU1: GeForce RTX 2080 Ti (pcie 1), CUDA cap. 7.5, 11 GB VRAM, 68 CUs
+[0mNvidia driver version: 460.56
+[96mEth: the pool list contains 2 pools (2 from command-line)
+Eth: primary pool: ssl://eu1.ethermine.org:5555
+[0mStarting GPU mining
+[96mEth: Connecting to ethash pool ssl://eu1.ethermine.org:5555 (proto: EthProxy)
+[95mGPU1: 50C 0% 34W
+GPUs power: 33.6 W
+[92mEth: Connected to SSL ethash pool eu1.ethermine.org:5555 (172.65.207.106)
+[0mEth: New job #a5f478c0 from ssl://eu1.ethermine.org:5555; diff: 4000MH
+GPU1: Starting up... (0)
+GPU1: Generating ethash light cache for epoch #407
+[97mListening for CDM remote manager at port 3333 in read-only mode
+[0mEth: New job #060ebc01 from ssl://eu1.ethermine.org:5555; diff: 4000MH
+Light cache generated in 2.0 s (33.1 MB/s)
+GPU1: Allocating DAG (4.20) GB; good for epoch up to #409
+GPU1: Generating DAG for epoch #407
+GPU1: DAG  20%
+[96mEth speed: 0.000 MH/s, shares: 0/0/0, time: 0:00
+[0mEth: New job #29f6c604 from ssl://eu1.ethermine.org:5555; diff: 4000MH
+GPU1: DAG  42%
+GPU1: DAG  62%
+GPU1: DAG  84%
+Eth: New job #303e7b4a from ssl://eu1.ethermine.org:5555; diff: 4000MH
+[96mEth speed: 0.000 MH/s, shares: 0/0/0, time: 0:00
+[97mGPU1: DAG generated in 7.2 s (592.0 MB/s)
+GPU1: Using v2 Ethash CUDA kernels (GeForce RTX 2080 Ti)
+[0mEth: New job #4103d850 from ssl://eu1.ethermine.org:5555; diff: 4000MH
+Eth: New job #8d8eae2d from ssl://eu1.ethermine.org:5555; diff: 4000MH
+[96mEth speed: 50.755 MH/s, shares: 0/0/0, time: 0:00
+[0mEth: New job #a7fa80f8 from ssl://eu1.ethermine.org:5555; diff: 4000MH
+Eth: New job #fb01dc75 from ssl://eu1.ethermine.org:5555; diff: 4000MH
+[96mEth speed: 50.767 MH/s, shares: 0/0/0, time: 0:00
+[0mEth: New job #ffe680bb from ssl://eu1.ethermine.org:5555; diff: 4000MH
+[96mEth speed: 50.780 MH/s, shares: 0/0/0, time: 0:00
+[0mEth: New job #e4db03e5 from ssl://eu1.ethermine.org:5555; diff: 4000MH
+Eth: New job #7c49554f from ssl://eu1.ethermine.org:5555; diff: 4000MH
+Eth: New job #b6750663 from ssl://eu1.ethermine.org:5555; diff: 4000MH
+[96mEth speed: 50.707 MH/s, shares: 0/0/0, time: 0:00
+[93mGPU1 is stopped because it has temperature >= 70C
