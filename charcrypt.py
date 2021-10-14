@@ -3,10 +3,15 @@
 # Surprisinly, this is usable as a library
 
 import sys
-# try: 
-#     import pyperclip
-# except ImportError:
-#     print("Install {pyperclip} for the output to be copied to the clipboard")
+import warnings
+warnings.filterwarnings("ignore")
+global clipboard
+try: 
+    import pyperclip
+    clipboard = True
+except ImportError:
+    clipboard = False
+    print("Install {pyperclip} for the output to be copied to the clipboard")
 
 leadingZeros = 7
 
@@ -61,18 +66,29 @@ def decrypt(*args):
 if __name__ == "__main__":
     choice = ""
     encryption = decryption = False
+    cryparg = ""
+    usrout = ""
 
     try:
-        if sys.argv[1] == "-e":
-            if len(sys.argv) < 3:
+        if "-e" in sys.argv:
+            cryparg = "-e"
+            if sys.argv[sys.argv.index("-e")+1]:
+                usrout = encrypt(sys.argv[sys.argv.index("-e")+1])
+                print(usrout)
+            else:
                 print(encrypt())
+        elif "-d" in sys.argv:
+            cryparg = "-d"
+            if sys.argv[sys.argv.index("-d")+1]:
+                usrout = decrypt(sys.argv[sys.argv.index("-d")+1])
+                print(usrout)
             else:
-                print(encrypt(sys.argv[2]))
-        elif sys.argv[1] == "-d":
-            if len(sys.argv) < 3:
-                print(decrypt())
-            else:
-                print(decrypt(sys.argv[2]))
+                usrout = decrypt()
+                print(usrout)
+
+        if clipboard:
+            if "-c" in sys.argv and "-c" == sys.argv.index(cryparg):
+                pyperclip.copy(usrout)
     except:
         while True:
             choice = input("Encrypt or Decrypt(e/d): ")
@@ -82,8 +98,15 @@ if __name__ == "__main__":
             elif choice.lower() == "d":
                 decryption = True
                 break
-
+            
+            
         if encryption:
-            print(encrypt())
+            usrout = encrypt()
+            print(usrout)
         elif decryption:
-            print(decrypt())
+            usrout = decrypt()
+            print(usrout)
+
+        if clipboard:
+            if "-c" in sys.argv:
+                pyperclip.copy(usrout)
