@@ -3,6 +3,10 @@
 # Surprisinly, this is usable as a library
 
 import sys
+# try: 
+#     import pyperclip
+# except ImportError:
+#     print("Install {pyperclip} for the output to be copied to the clipboard")
 
 leadingZeros = 7
 
