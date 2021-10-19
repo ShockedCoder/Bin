@@ -5,13 +5,16 @@
 import sys
 import warnings
 warnings.filterwarnings("ignore")
+warnings.simplefilter("ignore")
 global clipboard
 try: 
     import pyperclip
     clipboard = True
+    
 except ImportError:
     clipboard = False
     print("Install {pyperclip} for the output to be copied to the clipboard")
+
 
 leadingZeros = 7
 
@@ -85,11 +88,11 @@ if __name__ == "__main__":
             else:
                 usrout = decrypt()
                 print(usrout)
-
+        
         if clipboard:
-            if "-c" in sys.argv and "-c" == sys.argv.index(cryparg):
+            if "-c" in sys.argv and "-c" != sys.argv[sys.argv.index(cryparg)+1]:
                 pyperclip.copy(usrout)
-    except:
+    except Exception as e:
         while True:
             choice = input("Encrypt or Decrypt(e/d): ")
             if choice.lower() == "e":
