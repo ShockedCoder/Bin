@@ -1,3 +1,5 @@
+#!/bin/python
+
 import socket
 def a(*g):
     b = ""

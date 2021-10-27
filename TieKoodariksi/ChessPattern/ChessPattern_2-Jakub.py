@@ -1,3 +1,5 @@
+#!/bin/python
+
 # SIZE = 5
 
 # strong = "#" * (SIZE * SIZE)

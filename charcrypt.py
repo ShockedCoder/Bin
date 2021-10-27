@@ -1,19 +1,22 @@
+#!/bin/python
+
 # The "encrypted" result is just the unicode num version with zfill(7) 
 # Don't change anything, I've barely made it work.
 # Surprisinly, this is usable as a library
+# I've stopped trying to make it not choke if you try to encrypt "-c", so fuck you
+#
+# P.S. I'm sure I can make it way more optimized, but looking at the amount of work, I'm honestly not arsed
+# P.P.S. I might add file support if it seems fun. 
+
+global clipboard
 
 import sys
-import warnings
-warnings.filterwarnings("ignore")
-warnings.simplefilter("ignore")
-global clipboard
+import warnings; warnings.filterwarnings("ignore"); warnings.simplefilter("ignore")
 try: 
-    import pyperclip
+    import pyperclip as pc
     clipboard = True
-    
-except ImportError:
+except:
     clipboard = False
-    print("Install {pyperclip} for the output to be copied to the clipboard")
 
 
 leadingZeros = 7
@@ -41,9 +44,16 @@ def decrypt(*args):
     usrin = ""
     decrypted = ""
     if len(args) == 1:
-        usrin = args[0]
+        if args[0][-1:] != "0" or args[0][:1] != "0":
+            return "INVALID INPUT"
+        elif args[0] == "0":
+            return ""
+        else:
+            usrin = args[0]
     else:
         usrin = input("To Decrypt >> ")
+    
+
     ordlist = []
     chrlist = []
     limit = 0
@@ -63,53 +73,113 @@ def decrypt(*args):
     for i in chrlist:
         decrypted += str(i)
     return decrypted
-
+        
 
 
 if __name__ == "__main__":
     choice = ""
-    encryption = decryption = False
     cryparg = ""
     usrout = ""
+    prompt = False
+    confirmation = False
 
-    try:
+    if len(sys.argv) >= 2:
+    
         if "-e" in sys.argv:
             cryparg = "-e"
-            if sys.argv[sys.argv.index("-e")+1]:
-                usrout = encrypt(sys.argv[sys.argv.index("-e")+1])
-                print(usrout)
+            
+            if len(sys.argv) >= 2 and sys.argv.index(cryparg) != len(sys.argv)-1:
+
+                if sys.argv[sys.argv.index(cryparg)+1] != "-c":
+                
+                    usrout = encrypt(sys.argv[sys.argv.index(cryparg)+1])
+                    print(usrout)
+                    confirmation = True
+                
+                else:
+
+                    usrout = encrypt()
+                    print(usrout)
+                    confirmation = True
+            
             else:
-                print(encrypt())
+
+                usrout = encrypt()
+                print(usrout)
+                prompt = True
+    
+
         elif "-d" in sys.argv:
             cryparg = "-d"
-            if sys.argv[sys.argv.index("-d")+1]:
-                usrout = decrypt(sys.argv[sys.argv.index("-d")+1])
-                print(usrout)
+            
+            if len(sys.argv) >= 3:
+
+                if sys.argv[sys.argv.index(cryparg)+1] != "-c":
+                
+                    usrout = decrypt(sys.argv[sys.argv.index(cryparg)+1])
+                    print(usrout)
+                    confirmation = True
+
+                else:
+
+                    usrout = decrypt()
+                    print(usrout)
+                    confirmation = True
+          
             else:
+
                 usrout = decrypt()
                 print(usrout)
+                prompt = True
+
+
+        if "-c" in sys.argv and clipboard and confirmation: # and ("-c" == sys.argv[sys.argv.index(cryparg)-1] or "-c" == sys.argv[sys.argv.index(cryparg)+2])
+         
+            pc.copy(usrout)
+       
+        elif "-c" in sys.argv and not clipboard:
         
-        if clipboard:
-            if "-c" in sys.argv and "-c" != sys.argv[sys.argv.index(cryparg)+1]:
-                pyperclip.copy(usrout)
-    except Exception as e:
-        while True:
-            choice = input("Encrypt or Decrypt(e/d): ")
-            if choice.lower() == "e":
-                encryption = True
-                break
-            elif choice.lower() == "d":
-                decryption = True
-                break
+            print("Install {pyperclip} for the output to be copied to the clipboard")
+        
+        elif clipboard and prompt:
+         
+            tocopy = input("Copy output?(Y/n): ").replace(" ", "")
+         
+            if tocopy not in ("N", "n"):
+              
+                pc.copy(usrout)
+
+    
+    
+    else:
+        
+        choice = input("Encrypt or Decrypt(E/d): ").replace(" ", "")
+       
+        if choice in ("D", "d"):
             
-            
-        if encryption:
-            usrout = encrypt()
-            print(usrout)
-        elif decryption:
             usrout = decrypt()
             print(usrout)
+    
+        else:
+            
+            usrout = encrypt()
+            print(usrout)
 
-        if clipboard:
-            if "-c" in sys.argv:
-                pyperclip.copy(usrout)
+       
+        if "-c" in sys.argv and clipboard:
+         
+            try:
+           
+                pc.copy(usrout)
+            
+            except:
+            
+                print("Install {pyperclip} for the output to be copied to the clipboard")
+    
+        elif not "-c" in sys.argv and clipboard:
+            
+            tocopy = input("Copy output?(Y/n): ").replace(" ", "")
+            
+            if tocopy not in ("N", "n"):
+              
+                pc.copy(usrout)

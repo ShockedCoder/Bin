@@ -1,3 +1,5 @@
+#!/bin/python
+
 import socket
 import threading
 import platform

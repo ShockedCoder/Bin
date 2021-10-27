@@ -1,3 +1,5 @@
+#!/bin/python
+
 patternSize = 5
 
 line = "# " * patternSize * 2

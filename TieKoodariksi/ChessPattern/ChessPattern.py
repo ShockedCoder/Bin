@@ -1,3 +1,5 @@
+#!/bin/python
+
 patternSize = 4
 
 string_1 = ""

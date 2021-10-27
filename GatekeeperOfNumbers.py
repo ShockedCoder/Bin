@@ -1,3 +1,5 @@
+#!/bin/python
+
 # New method (Doesn't work)
 """ 
 changeableWhitelist = (7, "4") # Add your values here

@@ -1,3 +1,5 @@
+#!/bin/python
+
 stairSize = 3
 
 top = "###"
