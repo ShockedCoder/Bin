@@ -1,0 +1,15 @@
+#!/bin/bash
+
+if [ -f "activation/bashactivated" ]; then
+    source .venv/bin/activate
+    python3 main.py
+else
+    python3 -m pip install -U virtualenv
+    virtualenv .venv
+    source .venv/bin/activate
+    python3 -m pip install -U flask flask-sqlalchemy
+    mkdir activation
+    touch activation/bashactivated
+    clear
+    python3 main.py
+fi

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block head %}
+<title>very thick penis</title>
+<link rel="shortcut icon" href="{{ url_for('static', filename='icon/dat_BOI.ico') }}" type="image/x-icon">
+{% endblock %}
+
+{% block body %}
+<h1 style="font-size: 5vw;">wow, such big penis</h1>
+<div class="content">
+    <h1 style="font-size: 4vw;">Update Task</h1>
+
+    <form action="/update/{{ task.id }}" method="POST" style="margin-top: 1vw;">
+        <input type="text" name="content" id="content" value="{{ task.content }}">
+        <input type="submit" value="Update">
+    </form>
+</div>
+{% endblock %}
