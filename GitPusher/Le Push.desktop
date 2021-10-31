@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Le Push
+Comment=Le Push
+Icon=among-us
+Terminal=false
+StartupNotify=false
+Exec=/home/void/lepusher.sh
