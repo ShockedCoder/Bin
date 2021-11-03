@@ -6,14 +6,25 @@
 {% endblock %}
 
 {% block body %}
+
+{% if title %}
+
+<h1 class="biggerfont">{{ title }}</h1>
+
+{% else %}
+
 <h1 class="biggerfont">wow, such big penis</h1>
+
+{% endif %}
+
 <div class="content">
-    <h1 class="font">TaskMaster</h1>
+    <h2 class="font">TaskMaster</h2>
     {% if tasks|length < 1 %}
 
-    <h2>There are no tasks.</h3>
+    <h3 style="font-size: 2vw;">There are no tasks.</h3>
         
     {% else %}
+    <h3 style="font-size: 2vw;"><a style="text-decoration: underline; color: crimson;" href="/delete/0">Clear List</a></h3>
     <table>
         <tr>
             <th>Task</th>

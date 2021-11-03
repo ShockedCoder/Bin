@@ -6,21 +6,12 @@ import os
 from flask import Flask, render_template, redirect, request
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-import socket
-
-# import importlib.util as imp
-# charcrypt = imp.module_from_spec(imp.spec_from_file_location("module.name", f"{os.path.dirname(os.path.realpath(__file__))}/../charcrypt.py"))
-
-
+import warnings; warnings.filterwarnings("ignore"); warnings.simplefilter("ignore")
 
 app = Flask(__name__)
-
-db = SQLAlchemy(app)
-if not os.path.isfile("main.db"):
-    db.create_all()
-
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///main.db'
 
+db = SQLAlchemy(app)
 
 
 class Todo(db.Model):
@@ -29,7 +20,8 @@ class Todo(db.Model):
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
-        return "<Task %r>" % self.id
+        return f"<Task {self.id}>" # Personal Preference
+        #return "<Task %r>" % self.id
 
 
 @app.route("/", methods=["POST", "GET"])
@@ -38,13 +30,17 @@ def index():
         task_content = request.form["content"]
         new_task = Todo(content=task_content)
 
-        try:
-            db.session.add(new_task)
-            db.session.commit()
-            return redirect("/")
+        if not task_content.replace(" ", "") == "":
+            try:
+                db.session.add(new_task)
+                db.session.commit()
+                return redirect("/")
 
-        except:
-            return "There was an issue adding your task"
+            except:
+                return "There was an issue adding your task"
+        else:
+            tasks = Todo.query.order_by(Todo.date_created).all()
+            return render_template("index.html", tasks=tasks, title="No empty spaces, bro.")
 
     else:
         tasks = Todo.query.order_by(Todo.date_created).all()
@@ -53,16 +49,22 @@ def index():
 
 @app.route("/delete/<int:id>")
 def delete(id):
-    task_to_delete = Todo.query.get_or_404(id)
+    if id != 0:
+        task_to_delete = Todo.query.get_or_404(id)
 
-    try:
-        db.session.delete(task_to_delete)
-        db.session.commit()
+        try:
+            db.session.delete(task_to_delete)
+            db.session.commit()
+            return redirect("/")
+
+        except:
+            return "There was a problem deleting the provided task"
+    else:
+        tasks = Todo.query.order_by(Todo.date_created).all()
+        for task in tasks:
+            db.session.delete(Todo.query.get(task.id))
+            db.session.commit()
         return redirect("/")
-
-    except:
-        return "There was a problem deleting the provided task"
-
 
 @app.route("/update/<int:id>", methods=["GET", "POST"])
 def update(id):
@@ -81,4 +83,4 @@ def update(id):
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000, host=socket.gethostbyname(socket.gethostname()))
+    app.run(debug=True, port=5000, host="127.42.0.69")

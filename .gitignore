@@ -1,5 +1,5 @@
 __pycache__/
-WebConsole/activation/
+WebConsole/activation/*activated
 .venv/
 *.db
 .vscode

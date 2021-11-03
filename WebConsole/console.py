@@ -2,14 +2,13 @@
 
 # I just followed a tutorial, so I don't know what half of this even means
 
-from contextlib import redirect_stderr
 import os
 import subprocess
-from flask import Flask, render_template, redirect, request
-import socket
+from flask import Flask, render_template, redirect, request, jsonify
+
 
 import importlib.util as imp
-spec = imp.spec_from_file_location("module.name", f"{os.path.dirname(os.path.realpath(__file__))}/../charcrypt.py")
+spec = imp.spec_from_file_location("charcrypt", f"{os.path.dirname(os.path.realpath(__file__))}/../charcrypt.py")
 charcrypt = imp.module_from_spec(spec)
 spec.loader.exec_module(charcrypt)
 
@@ -37,29 +36,31 @@ def command(cmd):
     cmd = charcrypt.decrypt(cmd)
 
     try:
-        command = subprocess.Popen(cmd.split(" "), stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        command = subprocess.Popen(cmd.split("..__.."), stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         output, error = command.communicate()
-        return render_template("console.html", command=str(output)[:-1][2:], error=str(error))
+        return render_template("console.html", command=str(output)[:-1][2:].replace("\\\\", "\\"), error=str(error))
     
     except Exception as exceept:
         return render_template("console.html", command=None, error=exceept)
     
+@app.route("/api/command/<string:cmd>")
+def apicommand(cmd):
 
-""" 
-@app.route("/update/<int:id>", methods=["GET", "POST"])
-def update(id):
-
-    if request.method == "POST":
-        task.content = request.form["content"]
-    else:
-        return render_template("update.html", task=task)
+    cmd = charcrypt.decrypt(cmd)
 
     try:
-        db.session.commit()
-        return redirect("/")
-    except:
-        return render_template("console.html", command=None, error="There was an problem executing the command")
- """
+        command = subprocess.Popen(cmd.split("..__.."), stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        output, error = command.communicate()
+        return jsonify(output=str(output)[:-1][2:].replace("\\\\", "\\"), error=str(error))
+    
+    except Exception as exceept:
+        return jsonify(output=None, error=exceept)
+
+@app.route("/test")
+def test():
+    return jsonify(apple="fuck you homie", cheese="you absolute cunt")
+
+
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000, host="127.42.0.69")
+    app.run(debug=True, port=5001, host="127.42.0.69")
