@@ -17,4 +17,7 @@ if exist "activation/batchactivated" (
     type nul > activation/batchactivated
     cls
     title Flask Server
+    .venv\Scripts\activate.bat
+    python3 main.py
+
 )
