@@ -15,7 +15,7 @@ def clear():
     os.system("clear")
 clear()
 
-while usrin.lower() != "q":
+while True:
 
     print(f"Times Correct:   {correct}")
     print(f"Times Incorrect: {incorrect}")
@@ -27,6 +27,8 @@ while usrin.lower() != "q":
             clear()
             print("CORRECT!")
             correct += 1
+        elif usrin.lower().replace(" ", "") == "q":
+            break
         else:
             clear()
             print("INCORRECT!")
@@ -39,6 +41,8 @@ while usrin.lower() != "q":
             clear()
             print("CORRECT!")
             correct += 1
+        elif usrin.lower().replace(" ", "") == "q":
+            break
         else:
             clear()
             print("INCORRECT!")
