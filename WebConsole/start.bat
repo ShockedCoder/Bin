@@ -1,22 +1,20 @@
 @echo off
 
-if not exist "main.db" (
-    python3 activation/createdb.py
-)
-
-if exist "activation/batchactivated" (
-    title Flask Server
-    .venv\Scripts\activate.bat
-    python3 main.py
-) else (
+if not exist "activation\batchactivated" (
     title Activation
     python3 -m pip install -U virtualenv
     virtualenv .venv
-    .venv\Scripts\activate.bat
-    python3 -m pip install -U flask flask-sqlalchemy
-    type nul > activation/batchactivated
+    .venv\Scripts\activate
+    python3 -m pip install -U flask flask-sqlalchemy python-dotenv
+    type nul > "activation\batchactivated"
     cls
-    title Flask Server
-    python3 main.py
-
 )
+
+if not exist "main.db" (
+    .venv\Scripts\activate
+    python3 activation/createdb.py
+)
+
+title Flask Server
+.venv\Scripts\activate.bat
+flask run

@@ -7,6 +7,8 @@
 
 {% block body %}
 
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
 {% if title %}
 
 <h1 class="biggerfont">{{ title }}</h1>
@@ -18,13 +20,22 @@
 {% endif %}
 
 <div class="content">
+    {% if title %}
+
+    <h2 class="font"><a href="/testlist" style="text-decoration: none; color: white;">TaskMaster</a></h2>
+    
+    {% else %}
+    
     <h2 class="font">TaskMaster</h2>
+    
+    {% endif %}
+
     {% if tasks|length < 1 %}
 
     <h3 style="font-size: 2vw;">There are no tasks.</h3>
         
     {% else %}
-    <h3 style="font-size: 2vw;"><a style="text-decoration: underline; color: crimson;" href="/delete/0">Clear List</a></h3>
+    <h3 style="font-size: 2vw;"><a style="text-decoration: underline; color: crimson;" href="#" onClick="leConfirm('Are you sure you want to clear the list?')">Clear List</a></h3>
     <table>
         <tr>
             <th>Task</th>

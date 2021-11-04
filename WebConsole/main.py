@@ -81,6 +81,14 @@ def update(id):
     except:
         return "There was a problem deleting the provided task"
 
+@app.route("/testlist")
+def testlist():
+    tasks = ["aple", "apple sauce", "peepeepoopooyeah", "go to sawcon", "banana"]
+    for task in tasks:
+        db.session.add(Todo(content=task))
+    db.session.commit()
+    return redirect("/")
+
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000, host="127.42.0.69")
+    app.run(host="0.0.0.0", port=5000, debug=True)
