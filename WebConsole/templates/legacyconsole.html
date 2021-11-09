@@ -8,8 +8,10 @@
 
 {% block body %}
 <h1 class="biggerfont"><a href="/" style="text-decoration: none; color: white;">This is very scuffed, and I'm not arsed to improve it</a></h1>
-<h2 class="font">Output: {{ output }}</h2>
-<form action="/" method="POST" style="margin-top: 1vw;">
+<h2 class="font"><a href="/" style="text-decoration: none; color: white;">Please signify true spaces with "..__..", without the quotes</a></h2>
+<h2 class="font">Output: {{command}}</h2>
+<h2 class="font">Error: {{error}}</h2>
+<form action="/legacy" method="POST" style="margin-top: 1vw;">
     <input type="text" name="command" id="content" style="background-color: black; color: white;">
     <input type="submit" value="Execute" style="background-color: black; color: white;">
 </form>

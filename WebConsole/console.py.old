@@ -1,0 +1,125 @@
+#!/bin/python
+
+# I just followed a tutorial, so I don't know what most of this even means
+
+import os
+import subprocess
+from flask import Flask, render_template, redirect, request, jsonify
+from common import _pathdir
+
+
+import importlib.util as imp
+spec = imp.spec_from_file_location("charcrypt", f"{_pathdir}../charcrypt.py")
+charcrypt = imp.module_from_spec(spec)
+spec.loader.exec_module(charcrypt)
+
+
+app = Flask(__name__)
+
+dicto = {
+            "gayness meter": 100,
+            "apple sauce": {
+                "two grams of hot sauce(the good kind)"
+                "infinite amounts of apples"
+            }
+        }
+
+
+@app.route("/", methods=["POST", "GET"])
+def index():
+    if request.method == "POST":
+
+        try:
+            command = request.form["command"]
+            return redirect(f"/command/{charcrypt.encrypt(command)}")
+        except Exception as excheep:
+            return render_template("console.html", command=None, error=excheep)
+
+    else:
+        return render_template("console.html", command=None, error=None)
+
+@app.route("/command/<string:cmd>")
+def command(cmd): # Just print the output to a file and read output from there
+
+    cmd = charcrypt.decrypt(cmd)
+
+    try:
+        os.system(f"{cmd} > {_pathdir}/temporarytmp")
+        with open(f"{_pathdir}/temporarytmp") as f:
+            output = f.read()
+        os.remove(f"{_pathdir}/temporarytmp")
+        return render_template("console.html", output=output)
+    
+    except Exception as exceept:
+        return render_template("console.html", output=exceept)
+
+@app.route("/api/command/<string:cmd>")
+def jsoncommand(cmd):
+
+    cmd = charcrypt.decrypt(cmd)
+
+    try:
+        os.system(f"{cmd} > {_pathdir}/temporarytmp")
+        with open(f"{_pathdir}/temporarytmp") as f:
+            output = f.read()
+        os.remove(f"{_pathdir}/temporarytmp")
+        return jsonify(output=output)
+    
+    except Exception as exceept:
+        return jsonify(output=exceept)
+
+
+@app.route("/test")
+def test():
+    return jsonify(apple="fuck you homie", cheese="you absolute cunt")
+    # return jsonify("fuck you homie", "you absolute cunt")
+    # return jsonify(dicto) # Doesn't work, pathetic. (But this means I have to make my own jsonifyer... aaaaaaaAAAAAAAAAAAAAAAA)
+
+
+######################################################################################################
+#                                               Legacy                                               #
+######################################################################################################
+
+@app.route("/legacy", methods=["POST", "GET"])
+def legacyindex():
+    if request.method == "POST":
+
+        try:
+            command = request.form["command"]
+            return redirect(f"/legacy/command/{charcrypt.encrypt(command)}")
+        except Exception as excheep:
+            return render_template("legacyconsole.html", command=None, error=excheep)
+
+    else:
+        return render_template("legacyconsole.html", command=None, error=None)
+
+
+@app.route("/legacy/command/<string:cmd>")
+def legacycommand(cmd):
+
+    cmd = charcrypt.decrypt(cmd)
+
+    try:
+        command = subprocess.Popen(cmd.split("..__.."), stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        output, error = command.communicate()
+        return render_template("legacyconsole.html", command=str(output)[:-1][2:].replace("\\\\", "\\"), error=str(error))
+    
+    except Exception as exceept:
+        return render_template("legacyconsole.html", command=None, error=exceept)
+
+@app.route("/legacy/api/command/<string:cmd>")
+def legacyjsoncommand(cmd):
+
+    cmd = charcrypt.decrypt(cmd)
+
+    try:
+        command = subprocess.Popen(cmd.split("..__.."), stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        output, error = command.communicate()
+        return jsonify(output=str(output)[:-1][2:].replace("\\\\", "\\"), error=str(error))
+    
+    except Exception as exceept:
+        return jsonify(output=None, error=exceept)
+
+
+if __name__ == "__main__":
+    app.run(debug=True, port=5001, host="0.0.0.0")

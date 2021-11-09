@@ -13,14 +13,26 @@ body, html {
     width: 400px;
 }
 
+/* Mobile */
 @media screen and (max-width: 481px) {
     table, td, th {
         border: 1px solid gray;
         padding: 1vw;
         font-size: 5vw;
     }
+    .font {
+        font-size: 8vw;
+    }
+    .biggerfont {
+        font-size: 10vw;
+    }
+    .subsubtitle {
+        font-size: 5vw;
+    }
+
 }
 
+/* Desktop */
 @media screen and (min-width: 481px) {
     table, td, th {
         border: 1px solid gray;
@@ -32,6 +44,9 @@ body, html {
     }
     .biggerfont {
         font-size: 5vw;
+    }
+    .subsubtitle {
+        font-size: 2vw;
     }
 }
 

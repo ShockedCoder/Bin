@@ -4,7 +4,7 @@ if [ ! -f "activation/bashactivated" ]; then
     python3 -m pip install -U virtualenv
     virtualenv .venv
     source .venv/bin/activate
-    python3 -m pip install -U flask flask-sqlalchemy python-dotenv
+    python3 -m pip install -r lethinigs.txt
     touch activation/bashactivated
     clear
 fi

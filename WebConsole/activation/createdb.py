@@ -1,3 +1,5 @@
+#!/bin/python
+
 import importlib.util as imp
 
 spec = imp.spec_from_file_location("main", "main.py")

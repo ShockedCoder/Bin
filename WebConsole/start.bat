@@ -5,7 +5,7 @@ if not exist "activation\batchactivated" (
     python3 -m pip install -U virtualenv
     virtualenv .venv
     .venv\Scripts\activate
-    python3 -m pip install -U flask flask-sqlalchemy python-dotenv
+    python3 -m pip install -r lethinigs.txt
     type nul > "activation\batchactivated"
     cls
 )
