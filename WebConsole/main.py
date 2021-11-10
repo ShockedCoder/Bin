@@ -2,7 +2,6 @@
 
 # I just followed a tutorial, so I don't know what most of this even means
 
-from xmlrpc.client import TRANSPORT_ERROR
 from flask import Flask, render_template, redirect, request
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
