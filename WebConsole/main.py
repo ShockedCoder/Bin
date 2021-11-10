@@ -8,7 +8,7 @@ from datetime import datetime
 #import warnings; warnings.filterwarnings("ignore"); warnings.simplefilter("ignore")
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///main.db'
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///main.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
