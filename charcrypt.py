@@ -10,18 +10,29 @@
 
 global clipboard
 
+import subprocess as sub
 import sys
 import warnings; warnings.filterwarnings("ignore"); warnings.simplefilter("ignore")
 try: 
     import pyperclip as pc
     clipboard = True
 except:
-    clipboard = False
+    try:
+        output, error = sub.Popen(["python3", "-m", "pip", "install", "pyperclip"], stdout=sub.PIPE, stderr=sub.STDOUT).communicate()
+        if error != None:
+            raise Exception
+        else:
+            print("{pyperclip} installation successful")
+            import pyperclip as pc
+    except:
+        print("{pyperclip} installation failed.")
+        clipboard = False
 
 
 leadingZeros = 7
 
 
+################## TODO: ADD FILE SUPPORT #################
 def encrypt(*args):
     usrin = ""
     encrypted = ""
@@ -52,7 +63,8 @@ def decrypt(*args):
             usrin = args[0]
     else:
         usrin = input("To Decrypt >> ")
-    
+###########################################################
+
 
     ordlist = []
     chrlist = []

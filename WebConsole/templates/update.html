@@ -1,18 +1,18 @@
 {% extends "base.html" %}
 
 {% block head %}
-<title>eyyyy dat boi do be vibin'</title>
-<link rel="shortcut icon" href="{{ url_for('static', filename='icon/dat_BOI.ico') }}" type="image/x-icon">
+    <title>eyyyy dat boi do be vibin'</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='icon/dat_BOI.ico') }}" type="image/x-icon">
 {% endblock %}
 
 {% block body %}
-<h1 style="font-size: 5vw;">le aple saucy</h1>
-<div class="content">
-    <h1 style="font-size: 4vw;">Update Task</h1>
+    <h1 style="font-size: 5vw;">le aple saucy</h1>
+    <div class="content">
+        <h1 style="font-size: 4vw;">Update Task</h1>
 
-    <form action="/update/{{ task.id }}" method="POST" style="margin-top: 1vw;">
-        <input type="text" name="content" id="content" value="{{ task.content }}" style="background-color: black; color: white;">
-        <input type="submit" value="Update" style="background-color: black; color: white;">
-    </form>
-</div>
+        <form action="/update/{{ task.id }}" method="POST" style="margin-top: 1vw;">
+            <input type="text" name="content" id="content" value="{{ task.content }}" style="background-color: black; color: white;">
+            <input type="submit" value="Update" style="background-color: black; color: white;">
+        </form>
+    </div>
 {% endblock %}

@@ -5,6 +5,7 @@
 from flask import Flask, render_template, redirect, request
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+# import itsdangerous # TODO: Look into `itsdangerous`
 #import warnings; warnings.filterwarnings("ignore"); warnings.simplefilter("ignore")
 
 app = Flask(__name__)
@@ -12,6 +13,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///main.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
+
 
 
 class Todo(db.Model):
@@ -86,13 +88,24 @@ def update(id):
         return "There was a problem deleting the provided task"
 
 
-@app.route("/testlist")
-def testlist():
-    tasks = ["aple", "apple sauce", "peepeepoopooyeah", "go to sawcon", "banana"]
-    for task in tasks:
-        db.session.add(Todo(content=task))
-    db.session.commit()
-    return redirect("/")
+@app.route("/test")
+@app.route("/test/<string:arg>")
+@app.route("/test/<string:arg>/<int:amount>")
+def test(arg = None, amount = 1):
+    if arg == None:
+        return render_template("test.html")
+
+    elif arg == "list":
+        tasks = ["aple", "apple sauce", "peepeepoopooyeah", "go to sawcon", "banana"]
+        for _ in range(amount): 
+            for task in tasks:
+                db.session.add(Todo(content=task))
+        db.session.commit()
+        return redirect("/")
+
+    else:
+        return redirect("/test")
+
 
 
 if __name__ == "__main__":

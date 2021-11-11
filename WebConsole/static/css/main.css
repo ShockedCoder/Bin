@@ -7,10 +7,14 @@ body, html {
     caret-color: crimson;
 }
 
-
 .content {
     margin: 0 auto;
     width: 400px;
+}
+
+/* Looks wonky as shit, so I turned it off */
+#ghostery-tracker-tally {
+    visibility: hidden;
 }
 
 /* Mobile */

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <title>Tests</title>
+    <link rel="icon" href="{{ url_for('static', filename='icon/test.png') }}" type="image/png">
+{% endblock %}
+
+{% block body %}
+    <!-- Nice and messy CSS for anyone who wants it -->
+    <style>
+        html, body {
+            height: 99%; /* It'll overflow if I put it at 100% for some reason*/
+        }
+
+        div {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            flex-wrap: nowrap;
+            align-items: center;
+            height: 100%;
+        }
+        div > h1,a {
+            border: 0.5rem solid rgb(163, 16, 46);
+            border-radius: 5rem;
+            border-bottom: none;
+            border-top: none;
+            padding-left: 2.5vw !important; 
+            padding-right: 2.5vw !important;
+            padding: 0;
+            margin: 1vw;
+            text-decoration: none;
+            color: whitesmoke;
+        }
+    </style>
+
+    <div> <!-- This is utter wack, but I'm not gonna even try to improve it. -->
+          <!-- I'm not creative enough to make more than one test anyway -->
+        <a class="biggerfont" href="/test/list">list</a>
+    </div>
+{% endblock %}
