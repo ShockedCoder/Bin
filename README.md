@@ -6,13 +6,15 @@
 <li>charcrypt.py</li>
 -->
 
-<!-- <br />
+<!--
 <br />
-<br /> -->
+<br />
+<br />
 <h3 align="center">Not completed:</h3>
 <br />
 <div align="center">
 <li>WebConsole (Because it's literally not what it's supposed to be right now)</li>
+-->
 
 <br />
 <br />
