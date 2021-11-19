@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="FizzBuzz:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/FizzBuzz_jar</output-path>
+    <root id="archive" name="FizzBuzz.jar">
+      <element id="module-output" name="FizzBuzz" />
+    </root>
+  </artifact>
+</component>
