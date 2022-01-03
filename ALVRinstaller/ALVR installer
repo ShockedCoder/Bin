@@ -1,0 +1,130 @@
+#!/bin/bash
+# Can't explain well, so I just made this.
+# Exclusive to gibby9er9er0
+# ---------------------------------------------------------------------------------
+# This'll only build the server and put the files into the correct places.
+# You'll need to do everything else yourself
+# Working as of 04/01/2022 (dd/mm/yyyy)
+
+# Functions
+informingexit() {
+    echo
+    echo \ "$1"
+    echo
+    exit
+}
+
+# Formatting
+bold=$(tput bold)
+normal=$(tput sgr0)
+
+# Saves the sudo password for later use, so that you can kickback and relax.
+echo "Leave blank if you don't want for the script to save your sudo password temporarily"
+echo This will require you to be at the terminal when Sudo permission is required
+printf "Sudo Password: "
+read -rs sudopassword
+
+if [[ "$sudopassword" == "" ]]; then
+    sudoperm=false
+else
+    sudoperm=true
+fi
+echo $sudoperm
+
+# Checks if you want to skip all prompts
+echo "${bold}NOT RECOMMENDED IF YOU HAVEN'T READ THE SCRIPT${normal}"
+printf "Would you like to skip all confirmation prompts?(Y/n): "
+read -r skip
+printf "\n"
+
+if [[ "$skip" =~ [Yy] ]]; then
+    skip=true
+elif [[ "$skip" =~ [Nn] ]]; then
+    skip=false
+else
+    skip=true
+fi
+
+# Re-clones the repo
+cd ~/Games || informingexit "Please edit the script and insert the correct directory at [Line 49]"
+if [ $skip == false ]; then
+    printf "Is \"%s\" the correct directory?(Y/n): " "$PWD"
+    read -r correctornot
+    printf "\n"
+else
+    correctornot="y"
+fi
+
+if [[ "$correctornot" =~ [Yy] ]]; then
+    rm -rf ALVR-16.0.0
+    git clone https://github.com/alvr-org/ALVR ALVR-16.0.0
+    cd ALVR-16.0.0 || informingexit "Something went wrong at [Line 61]"
+elif [[ "$correctornot" =~ [Nn] ]]; then
+    echo Please edit the script and insert the correct directory at [Line 49]
+    exit
+else
+    rm -rf ALVR-16.0.0
+    git clone https://github.com/alvr-org/ALVR ALVR-16.0.0
+    cd ALVR-16.0.0 || informingexit "Something went wrong at [Line 68]"
+fi
+
+# Builds the server
+if [ $skip == false ]; then
+    printf "Build the server?(Y/n): "
+    read -r buildornot
+    printf "\n"
+else
+    buildornot="y"
+fi
+
+if [[ "$buildornot" =~ [Yy] ]]; then
+    cargo xtask build-server --release --bundle-ffmpeg
+    cd build/alvr_server_linux || informingexit "Something went wrong at [Line 82]"
+elif [[ "$buildornot" =~ [Nn] ]]; then
+    echo The script will stop here.
+    exit
+else
+    cargo xtask build-server --release --bundle-ffmpeg
+    cd build/alvr_server_linux || informingexit "Something went wrong at [Line 88]"
+fi
+
+# Moves the files to the corresponding places
+if [ $skip == false ]; then
+    printf "Move the files to the corresponding locations?(Y/n): "
+    read -r moveornot
+    printf "\n"
+else
+    moveornot="y"
+fi
+
+if [[ "$moveornot" =~ [Yy] ]]; then
+    if [ $sudoperm == true ]; then
+        echo "$sudopassword" | sudo -S ls >/dev/null 2>&1 # Activates sudo
+        sudo cp -r bin/* /bin/
+        sudo cp -r lib64/* /lib64/
+        sudo cp -r libexec/ /usr/
+        sudo cp -r share/* /share/
+    else
+        sudo cp -r bin/* /bin/
+        sudo cp -r lib64/* /lib64/
+        sudo cp -r libexec/ /usr/
+        sudo cp -r share/* /share/
+    fi
+elif [[ "$moveornot" =~ [Nn] ]]; then
+    echo The script will stop here.
+    exit
+else
+    if [ $sudoperm == true ]; then
+        echo "$sudopassword" | sudo -S ls >/dev/null 2>&1 # Activates sudo
+        sudo cp -r bin/* /bin/
+        sudo cp -r lib64/* /lib64/
+        sudo cp -r libexec/ /usr/
+        sudo cp -r share/* /share/
+    else
+        sudo cp -r bin/* /bin/
+        sudo cp -r lib64/* /lib64/
+        sudo cp -r libexec/ /usr/
+        sudo cp -r share/* /share/
+    fi
+fi
+

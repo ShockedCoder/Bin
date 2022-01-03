@@ -1,6 +1,13 @@
+# Leftover
 __pycache__/
-WebConsole/activation/*activated
-.venv/
-*.db
+.idea/
+*.iml
 .vscode
+
+# Directories
 *eakWe*/
+.venv/
+
+# Files
+WebConsole/activation/*activated
+*.db
