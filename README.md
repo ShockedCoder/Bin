@@ -24,5 +24,6 @@
 <div align="center">
 <li>Donut/</li>
 <li>FizzBuzz/PHP/fizzbuzz.php</li>
+<li>Art/The Eye of Judgement/</li>
 
 </div>
