@@ -1,10 +1,18 @@
 #!/bin/python
-import pyautogui as p
-import cv2 as c
-import numpy as n
 
-img = p.screenshot()
-img = c.cvtColor(n.array(img), c.COLOR_RGB2BGR)
-img = img[0:1080, 0:1920]
+# one line:
+# __import__("cv2").imwrite("desktop.png", __import__("cv2").cvtColor(__import__("numpy").array(__import__("pyautogui").screenshot()), __import__("cv2").COLOR_RGB2BGR)[x:1080, x:1920])
 
-c.imwrite("desktop.png", img)
+import pyautogui
+import numpy
+import cv2
+
+x, y = 0, 0
+w, h = 1920, 1080
+
+img = pyautogui.screenshot()
+img = numpy.array(img)
+img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
+img = img[x:h, y:w]
+
+cv2.imwrite("desktop.png", img)
