@@ -17,7 +17,7 @@ wrapper = ('{', '}')
 
 
 """ Functions """
-def wrapperparser(string:str, leftoff:int = 0, returnall:bool = True) -> tuple | bool | list:
+def wrapperparser(string:str, leftoff:int = 0, returnall:bool = False) -> tuple | bool | list:
     if len(wrapper[0]) == 1 and len(wrapper[1]) == 1:
         ex_op = 0 # Extra Open
         if returnall:
@@ -27,7 +27,7 @@ def wrapperparser(string:str, leftoff:int = 0, returnall:bool = True) -> tuple |
             if char == wrapper[0]:
                 ex_op += 1
                 if returnall:
-                    thung.append(wrapperparser(string, i))
+                    thung.append(wrapperparser(string, i, True))
             elif char == wrapper[1]:
                 if ex_op == 0:
                     if returnall:
