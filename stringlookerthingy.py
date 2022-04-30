@@ -5,7 +5,7 @@
 
 
 """ To-Do List """
-# TODO: Make it work for multi-char wrappers e.g.: "<!-- -->"
+# DONE: Make it work for multi-char wrappers e.g.: "<!-- -->"
 
 
 """ Imports """
