@@ -1,9 +1,5 @@
 #!/bin/python
 
-""" Notes """
-# Couldn't I have just used [string.index()]? - No, that wouldn't work as well. Just use RegEx instead.
-
-
 """ To-Do List """
 # DONE: Make it work for multi-char wrappers e.g.: "<!-- -->"
 
@@ -21,17 +17,23 @@ wrapper = ('{', '}')
 
 
 """ Functions """
-def wrapperparser(string:str, leftoff:int = 0) -> tuple | bool:
+def wrapperparser(string:str, leftoff:int = 0, returnall:bool = True) -> tuple | bool | list:
     if len(wrapper[0]) == 1 and len(wrapper[1]) == 1:
-        ex_op = 0 # Extra Open 
+        ex_op = 0 # Extra Open
+        if returnall:
+            thung = []
     
         for i, char in enumerate(string[leftoff+1:], leftoff+1):
             if char == wrapper[0]:
                 ex_op += 1
-                wrapperparser(string, i)
+                if returnall:
+                    thung.append(wrapperparser(string, i))
             elif char == wrapper[1]:
                 if ex_op == 0:
-                    return (leftoff, i)
+                    if returnall:
+                        return thung
+                    else:
+                        return (leftoff, i)
                 else:
                     ex_op -= 1
         return False
